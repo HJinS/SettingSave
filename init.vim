@@ -134,7 +134,7 @@ set hlsearch
 set showtabline=2
 
 " 행 표시선 출력
-set colorcolumn=80
+set colorcolumn=9999
 
 if has('nvim')			" nvim 을 사용 중이라면
 	set inccommand=nosplit	" nvim live %s substitute (실시간 강조)
