@@ -230,11 +230,11 @@ if has("nvim-0.5.0") || has("patch-8.1.1564")
 endif
 
 " <Tab> 을 눌러서 현재 지시자를 옮김.
-" inoremap <silent><expr> <TAB>
-      "\ pumvisible() ? "\<C-n>" :
-      "\ <SID>check_back_space() ? "\<TAB>" :
-      "\ coc#refresh()
-"inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <silent><expr> <TAB>
+      pumvisible() ? "\<C-n>" :
+      <SID>check_back_space() ? "\<TAB>" :
+      coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " <Backspace> 키가 지시자 제거, 기존 자동완성 양식 폐기
 function! s:check_back_space() abort
