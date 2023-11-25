@@ -231,9 +231,9 @@ endif
 
 " <Tab> 을 눌러서 현재 지시자를 옮김.
 inoremap <silent><expr> <TAB>
-      pumvisible() ? "\<C-n>" :
-      <SID>check_back_space() ? "\<TAB>" :
-      coc#refresh()
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " <Backspace> 키가 지시자 제거, 기존 자동완성 양식 폐기
