@@ -3,3 +3,11 @@
 
 nvim 설정 경로
 - ~/.config/nvim/init.vim
+
+## TODO
+- tmux
+- FlotTerm
+- LazyGit
+- Telescope
+- FZF
+- telescope(파일 탐색)
