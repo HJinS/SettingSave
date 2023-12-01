@@ -40,6 +40,8 @@ Plug 'svermeulen/vim-cutlass'
 " VIM GAS(GNU ASsembler) Highlighting
 Plug 'Shirk/vim-gas'
 
+Plug 'ludovicchabant/vim-gutentags'
+
 call plug#end()
 " =========================================================================
 " =  단축키 지정                                                          =
