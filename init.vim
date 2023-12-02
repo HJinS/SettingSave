@@ -25,22 +25,19 @@ Plug 'nanotech/jellybeans.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-" CScope 플러그인
-Plug 'ronakg/quickr-cscope.vim'
-
 " CtrlP 파일 탐색 플러그인
 Plug 'ctrlpvim/ctrlp.vim'
-
-" 비활성 윈도우 강조
-" Plug 'blueyed/vim-diminactive'
 
 " vim cutlass 잘라내기 명령어가 yank 에 영향을 주지 않음
 Plug 'svermeulen/vim-cutlass'
 
-" VIM GAS(GNU ASsembler) Highlighting
-Plug 'Shirk/vim-gas'
-
 Plug 'ludovicchabant/vim-gutentags'
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+
+Plug 'junegunn/fzf.vim'
+
+Plug 'airblade/vim-rooter'
 
 call plug#end()
 " =========================================================================
@@ -58,13 +55,6 @@ call plug#end()
 " ------------------------------------
 " 편집 모드 
 " ------------------------------------
-" jk 와 kj 를 <ESC> 키로 맵핑
-inoremap jk <ESC>
-inoremap kj <ESC>
-" ------------------------------------
-" 명령 모드 
-" ------------------------------------
-" <F1> 을 통해 NERDTree 와 Tagbar 열기
 nnoremap <silent><C-1> :NERDTreeToggle<CR><bar>:TagbarToggle <CR> 
 
 " <Ctrl + h, l> 를 눌러서 이전, 다음 탭으로 이동
@@ -85,7 +75,7 @@ nnoremap <silent><C-w>t :NERDTreeFocus<CR>
 " 우측 하단(botright)에 창 생성(new), 해당 창을 terminal 로 변경
 " 크기를 10 으로 재설정(resize) 후 창 높이를 고정(winfixheight)시킴
 " 줄번호는 삭제하고, 터미널 디렉터리 글자색을 변경
-nnoremap <silent><F2> 
+nnoremap <silent><C-2> 
 	\:botright new<CR><bar>
 	\:terminal<CR><bar><ESC>
 	\:resize 10<CR><bar>
@@ -95,29 +85,11 @@ nnoremap <silent><F2>
 " ------------------------------------
 " 터미널 모드 
 " ------------------------------------
-" 터미널 모드에서 <Ctrl + w> 누르면 명령 모드로 전환하고 <Ctrl + w> 입력
-tmap <silent><C-w> <ESC><C-w>
 
-" jk 혹은 kj 를 누르면 <ESC> 를 실행
-tmap <silent>jk <ESC>
-tmap <silent>kj <ESC>
-
-" <ESC> 입력 시 <C-\><C-n> 실행 => 터미널 모드에서 기본 모드로 전환
-tnoremap <silent><ESC> <C-\><C-n>
-
-" ------------------------------------
-" 명령, 비주얼 모드
-" ------------------------------------
-" iamroot 자동 주석
-map <F9> <ESC>o/*<CR> * IAMROOT, <C-R>=strftime("%Y.%m.%d")<CR>
-	\: <CR>*/<CR><ESC><UP><UP><END>
-" =========================================================================
-" =  vim 설정                                                             =
-" =========================================================================
 " 탭 정지 = 8 칸마다
-set tabstop=8
+set tabstop=4
 " 쉬프트 (<< 혹은 >>) 이동거리 8 칸
-set shiftwidth=8
+set shiftwidth=4
 
 " 줄 번호를 표시한다.
 set number
@@ -197,28 +169,7 @@ endfunction
 autocmd BufEnter term://* start " do nothing
 autocmd TermOpen term://* execute ":set nonu"
 
-" 파일 명이 *.S 로 시작하면 GAS 문법 강조 사용
-autocmd BufRead,BufNew *.S execute ":set ft=gas"
 
-" 버퍼를 저장할때 파일 이름이 .c, .h 와 같다면 ctags 명령어를 실행
-" autocmd BufWritePost *.c,*.h silent! !ctags -R &
-
-" 윈도우를 나갈 때 뷰를 저장하고,
-autocmd BufWinLeave *.c,*.h mkview
-
-" 윈도우에 들어갈 땐 뷰를 로드한다. (커서위치 저장)
-" silent! 는 loadview 중 발생하는 에러를 억압(suppress) 한다.
-autocmd BufWinEnter *.c,*.h silent! loadview
-
-" 활성화된 버퍼만 라인 번호 표시 (단, 확장자는 .c 혹은 .h 일때만 동작)
-autocmd BufEnter * if (&filetype == 'c' || &filetype == 'cpp')
-	\| set number
-\| endif
-
-" 버퍼에서 나갈 땐 줄 번호를 지운다.
-autocmd BufLeave * if (&filetype == 'c' || &filetype == 'cpp')
-	\| set nonumber
-\| endif
 " =========================================================================
 " =  플러그인 설정                                                        =
 " =========================================================================
@@ -231,28 +182,15 @@ if has("nvim-0.5.0") || has("patch-8.1.1564")
   set signcolumn=number
 endif
 
-" <Tab> 을 눌러서 현재 지시자를 옮김.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-" <Backspace> 키가 지시자 제거, 기존 자동완성 양식 폐기
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" <Ctrl + Space> 를 눌러서 자동완성 적용
+" <Ctrl + 0> 를 눌러서 자동완성 적용
 if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
+  inoremap <silent><expr> <C-0> coc#refresh()
 else
-  inoremap <silent><expr> <c-@> coc#refresh()
+  inoremap <silent><expr> <c-0> coc#refresh()
 endif
 
-" 코드 탐색 단축키
-nmap <silent> gr <Plug>(coc-references)
+" 코드 탐색 단축키 Ctrl f
+nmap <silent> <C-f> <Plug>(coc-references)
 
 " 커서 아래의 토큰을 강조
 autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -296,4 +234,4 @@ nnoremap c d
 xnoremap c d
 
 nnoremap cc dd
-nnoremap C Dv
+nnoremap C Dv;
