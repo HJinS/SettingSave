@@ -182,12 +182,15 @@ if has("nvim-0.5.0") || has("patch-8.1.1564")
   set signcolumn=number
 endif
 
-" <Ctrl + 0> 를 눌러서 자동완성 적용
-if has('nvim')
-  inoremap <silent><expr> <C-0> coc#refresh()
-else
-  inoremap <silent><expr> <c-0> coc#refresh()
-endif
+function! s:check_back_space() abort
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1] =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+	\ pumvisible() ? "\<C-n>" :
+	\ <SID>check_back_space() ? "\<Tab>" :
+	\ coc#refresh()
 
 " 코드 탐색 단축키 Ctrl f
 nmap <silent> <c-f> <Plug>(coc-references)
