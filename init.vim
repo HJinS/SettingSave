@@ -190,7 +190,7 @@ else
 endif
 
 " 코드 탐색 단축키 Ctrl f
-nmap <silent> <C-f> <Plug>(coc-references)
+nmap <silent> <c-f> <Plug>(coc-references)
 
 " 커서 아래의 토큰을 강조
 autocmd CursorHold * silent call CocActionAsync('highlight')
