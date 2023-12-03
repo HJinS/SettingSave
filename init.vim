@@ -170,11 +170,6 @@ endfunction
 " =========================================================================
 " =  자동 실행 (autocmd)                                                  =
 " =========================================================================
-" terminal buffer 에 진입했을 때 mode 를 normal 에서 terminal 모드로 변경
-" 또한 줄번호를 없앤다.
-autocmd BufEnter term://* start " do nothing
-autocmd TermOpen term://* execute ":set nonu"
-
 
 " =========================================================================
 " =  플러그인 설정                                                        =
@@ -197,9 +192,6 @@ inoremap <silent><expr> <Tab>
 	\ pumvisible() ? "\<C-n>" :
 	\ <SID>check_back_space() ? "\<Tab>" :
 	\ coc#refresh()
-
-" 코드 탐색 단축키 Ctrl f
-nmap <silent> <c-f> <Plug>(coc-references)
 
 " 커서 아래의 토큰을 강조
 autocmd CursorHold * silent call CocActionAsync('highlight')
