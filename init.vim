@@ -82,6 +82,12 @@ nnoremap <silent><C-2>
 	\:set winfixheight<CR><bar>
 	\:set nonu<CR><bar>
 	\iLS_COLORS=$LS_COLORS:'di=1;33:ln=36'<CR>
+
+nnoremap <silent> <C-p> :Files<CR>
+nnoremap <silent> <C-g> :GFiles<CR>
+nnoremap <silent> <C-o> :Buffers<CR>
+nnoremap <C-f> :Rg!
+
 " ------------------------------------
 " 터미널 모드 
 " ------------------------------------
