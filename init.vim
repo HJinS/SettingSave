@@ -87,6 +87,34 @@ nnoremap <silent> <C-g> :GFiles<CR>
 nnoremap <silent> <C-o> :Buffers<CR>
 nnoremap <C-f> :Rg
 
+command! -bang -nargs=? -complete=dir Files
+	\ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
+
+
+" Get text in files with Rg
+command! -bang -nargs=* Rg
+	\ call fzf#vim#grep(
+	\ 'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+	\ fzf#vim#with_preview(), <bang>0)
+
+" Ripgrep advanced
+function! RipgrepFzf(query, fullscreen)
+	let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s || true'
+	let initial_command = printf(command_fmt, shellescape(a:query))
+	let reload_command = printf(command_fmt, '{q}')
+	let spec = {'options': ['--phony', '--query', a:query, '--bind', ''change:reload:'.reload_command]}
+	call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction
+
+
+command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+
+" Git grep
+command! -bang -nargs=* GGrep
+	\ call fzf#vim#grep(
+	\ 	'git grep --line-number '.shellescape(<q-args>), 0,
+	\	fzf#vim#with_preview({'dif': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
+
 " ------------------------------------
 " 터미널 모드 
 " ------------------------------------
@@ -192,7 +220,8 @@ function! s:check_back_space() abort
 	return !col || getline('.')[col - 1] =~ '\s'
 endfunction
 
-inoremap <silent><expr> <C-Tab>
+" Ctrl t 자동완성
+inoremap <silent><expr> <C-t>
 	\ pumvisible() ? "\<C-n>" :
 	\ <SID>check_back_space() ? "\<Tab>" :
 	\ coc#refresh()
