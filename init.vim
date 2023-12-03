@@ -25,9 +25,6 @@ Plug 'nanotech/jellybeans.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-" CtrlP 파일 탐색 플러그인
-Plug 'ctrlpvim/ctrlp.vim'
-
 " vim cutlass 잘라내기 명령어가 yank 에 영향을 주지 않음
 Plug 'svermeulen/vim-cutlass'
 
@@ -38,6 +35,8 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 Plug 'airblade/vim-rooter'
+
+Plug 'duane9/nvim-rg'
 
 call plug#end()
 " =========================================================================
@@ -86,7 +85,7 @@ nnoremap <silent><C-2>
 nnoremap <silent> <C-p> :Files<CR>
 nnoremap <silent> <C-g> :GFiles<CR>
 nnoremap <silent> <C-o> :Buffers<CR>
-nnoremap <C-f> :Rg!
+nnoremap <C-f> :Rg
 
 " ------------------------------------
 " 터미널 모드 
@@ -170,6 +169,11 @@ endfunction
 " =========================================================================
 " =  자동 실행 (autocmd)                                                  =
 " =========================================================================
+" terminal buffer 에 진입했을 때 mode 를 normal 에서 terminal 모드로 변경
+" 또한 줄번호를 없앤다.
+autocmd BufEnter term://* start " do nothing
+autocmd TermOpen term://* execute ":set nonu"
+
 
 " =========================================================================
 " =  플러그인 설정                                                        =
@@ -188,7 +192,7 @@ function! s:check_back_space() abort
 	return !col || getline('.')[col - 1] =~ '\s'
 endfunction
 
-inoremap <silent><expr> <Tab>
+inoremap <silent><expr> <C-Tab>
 	\ pumvisible() ? "\<C-n>" :
 	\ <SID>check_back_space() ? "\<Tab>" :
 	\ coc#refresh()
