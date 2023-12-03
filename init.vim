@@ -85,7 +85,7 @@ nnoremap <silent><C-2>
 nnoremap <silent> <C-p> :Files<CR>
 nnoremap <silent> <C-g> :GFiles<CR>
 nnoremap <silent> <C-o> :Buffers<CR>
-nnoremap <silent> <C-f> :Rg<CR>
+nnoremap <silent> <C-f> :RG<CR>
 
 " ------------------------------------
 " 터미널 모드 
@@ -217,7 +217,7 @@ function! RipgrepFzf(query, fullscreen)
 endfunction
 
 
-command! -nargs=* -bang Rg call RipgrepFzf(<q-args>, <bang>0)
+command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
 " Git grep
 command! -bang -nargs=* GGrep
