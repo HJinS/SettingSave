@@ -93,7 +93,7 @@ nnoremap <silent> <C-f> :RG<CR>
 " 터미널 모드 
 " ------------------------------------
 
-" 탭 정지 = 8 칸마다
+" 탭 정지 = 4 칸마다
 set tabstop=4
 " 쉬프트 (<< 혹은 >>) 이동거리 8 칸
 set shiftwidth=4
@@ -261,6 +261,29 @@ let g:airline#extensions#tabline#show_tabs = 1
 " ------------------------------------
 " 창 크기(가로)를 20 으로 설정
 let g:NERDTreeWinSize=30
+
+" ------------------------------------
+"  python-mode 설정
+" ------------------------------------
+set g:pymode = 1
+set g:pymode_warning = 1
+let g:pymode_options_max_line_length = 200
+
+setlocal complete+=t
+setlocal formatoptions-=t
+if v:version > 702 && !&relativenumber
+    setlocal number
+endif
+setlocal nowrap
+" setlocal textwidth=79
+setlocal commentstring=#%s
+setlocal define=^\s*\\(def\\\\|class\\)
+let g:pymode_quickfix_minheight = 3
+let g:pymode_quickfix_maxheight = 6
+let g:pymode_preview_height = &previewheight
+let g:pymode_paths = ['/Users/jin_pc/.pyenv/versions/3.9.7/envs/danbi3.2']
+let g:pymode_syntax_docstrings = g:pymode_syntax_all
+
 " ------------------------------------
 " vim-cutlass 설정
 " ------------------------------------
