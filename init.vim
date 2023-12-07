@@ -265,24 +265,24 @@ let g:NERDTreeWinSize=30
 " ------------------------------------
 "  python-mode 설정
 " ------------------------------------
-set g:pymode = 1
-set g:pymode_warning = 1
-let g:pymode_options_max_line_length = 200
+" set g:pymode = 1
+" set g:pymode_warning = 1
+" let g:pymode_options_max_line_length = 200
 
-setlocal complete+=t
-setlocal formatoptions-=t
-if v:version > 702 && !&relativenumber
+" setlocal complete+=t
+" setlocal formatoptions-=t
+" if v:version > 702 && !&relativenumber
     setlocal number
-endif
-setlocal nowrap
+" endif
+" setlocal nowrap
 " setlocal textwidth=79
-setlocal commentstring=#%s
-setlocal define=^\s*\\(def\\\\|class\\)
-let g:pymode_quickfix_minheight = 3
-let g:pymode_quickfix_maxheight = 6
-let g:pymode_preview_height = &previewheight
-let g:pymode_paths = ['/Users/jin_pc/.pyenv/versions/3.9.7/envs/danbi3.2']
-let g:pymode_syntax_docstrings = g:pymode_syntax_all
+" setlocal commentstring=#%s
+" setlocal define=^\s*\\(def\\\\|class\\)
+" let g:pymode_quickfix_minheight = 3
+" let g:pymode_quickfix_maxheight = 6
+" let g:pymode_preview_height = &previewheight
+" let g:pymode_paths = ['/Users/jin_pc/.pyenv/versions/3.9.7/envs/danbi3.2']
+" let g:pymode_syntax_docstrings = g:pymode_syntax_all
 
 " ------------------------------------
 " vim-cutlass 설정
