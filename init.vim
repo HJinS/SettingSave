@@ -38,6 +38,8 @@ Plug 'airblade/vim-rooter'
 
 Plug 'duane9/nvim-rg'
 
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop'}
+
 call plug#end()
 " =========================================================================
 " =  단축키 지정                                                          =
