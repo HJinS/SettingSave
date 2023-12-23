@@ -38,7 +38,7 @@ Plug 'airblade/vim-rooter'
 
 Plug 'duane9/nvim-rg'
 
-Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop'}
+Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build', 'branch': 'main' }
 
 call plug#end()
 " =========================================================================
@@ -110,6 +110,8 @@ set path+=**
 
 " 탐색 문자열 강조
 set hlsearch
+
+set tabstop=4
 
 " 항상 상단에 탭 라인을 출력한다.
 set showtabline=2
@@ -189,19 +191,26 @@ if has("nvim-0.5.0") || has("patch-8.1.1564")
   set signcolumn=number
 endif
 
-function! s:check_back_space() abort
-	let col = col('.') - 1
-	return !col || getline('.')[col - 1] =~ '\s'
-endfunction
+" TAB 자동완성"
+inoremap <silent><expr> <TAB>
+    \ coc#pum#visible() ? coc#pum#next(1) :
+    \ CheckBackspace() ? "\<Tab>" :
+    \ coc#refresh()
 
-" Ctrl t 자동완성
-inoremap <silent><expr> <C-t>
-	\ pumvisible() ? "\<C-n>" :
-	\ <SID>check_back_space() ? "\<Tab>" :
-	\ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 command! -bang -nargs=? -complete=dir Files
 	\ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
 " Get text in files with Rg
 command! -bang -nargs=* Rg
@@ -227,9 +236,23 @@ command! -bang -nargs=* GGrep
 	\ 	'git grep --line-number '.shellescape(<q-args>), 0,
 	\	fzf#vim#with_preview({'dif': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
 
+" ------------------------------------
+"  nvim-treesitter 설정
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "python", "kotlin", "java", "javascript", "html", "lua", "ini", "yaml", "htmldjango" },
+  ignore_install = { "" },
+  auto_install = true,
+  sync_install = true,
+  highlight = {
+    enable = true,
+    disable = { "" },
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF
 " 커서 아래의 토큰을 강조
 autocmd CursorHold * silent call CocActionAsync('highlight')
-" ------------------------------------
 " ------------------------------------
 " tagbar 설정
 " ------------------------------------
@@ -261,28 +284,6 @@ let g:airline#extensions#tabline#show_tabs = 1
 " ------------------------------------
 " 창 크기(가로)를 20 으로 설정
 let g:NERDTreeWinSize=30
-
-" ------------------------------------
-"  python-mode 설정
-" ------------------------------------
-" set g:pymode = 1
-" set g:pymode_warning = 1
-" let g:pymode_options_max_line_length = 200
-
-" setlocal complete+=t
-" setlocal formatoptions-=t
-" if v:version > 702 && !&relativenumber
-    setlocal number
-" endif
-" setlocal nowrap
-" setlocal textwidth=79
-" setlocal commentstring=#%s
-" setlocal define=^\s*\\(def\\\\|class\\)
-" let g:pymode_quickfix_minheight = 3
-" let g:pymode_quickfix_maxheight = 6
-" let g:pymode_preview_height = &previewheight
-" let g:pymode_paths = ['/Users/jin_pc/.pyenv/versions/3.9.7/envs/danbi3.2']
-" let g:pymode_syntax_docstrings = g:pymode_syntax_all
 
 " ------------------------------------
 " vim-cutlass 설정
