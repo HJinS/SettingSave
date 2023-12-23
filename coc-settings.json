@@ -28,7 +28,6 @@
 	  "jedi.hover.disable.keyword.names": [],
 	  "jedi.hover.disable.keyword.fullNames": [],
 	  "jedi.workspace.extraPaths": [],
-	  "jedi.workspace.environmentPath": "/path/to/venv/bin/python",
 	  "jedi.workspace.symbols.maxSymbols": 20,
 	  "jedi.workspace.symbols.ignoreFolders": [
 		".nox",
