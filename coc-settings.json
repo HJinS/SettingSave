@@ -4,43 +4,6 @@
 	"diagnostic.hintSign": "➤",
 	"diagnostic.infoSign": "ℹ",
 	"diagnostic.warningSign": "⚠",
-	"diagnostic-languageserver.filetypes": {
-    	"python": "flake8"
-  	},
-	"diagnostic-languageserver.linters": {
-    	"flake8": {
-    		"sourceName": "flake8",
-    		"command": "flake8",
-    		"debounce": 200,
-    		"rootPatterns": [".git", "pyproject.toml", "setup.py", "README.md", "dev-requirements.txt", "requirements.txt"],
-    		"args": [
-				"--max-line-length 200",
-    			"--ignore=F841, E722, E126, E226, E127, W503",
-    			"--format=%(row)d,%(col)d,%(code).1s,%(code)s: %(text)s",
-    			"--per-file-ignores='__init__.py: F401 settings_*.py: F401, F403, F405, W292'",
-				"--exclude=.git/ */migrations/ settings.py manage.py */docker_base_image/* _test.py media/ jupyter_notebook_config.py jupyterhub_config.py __init__.py danbi_server_scripts/*"
-    		],
-    		"offsetLine": 0,
-    		"offsetColumn": 0,
-    		"formatLines": 1,
-    		"formatPattern": [
-    			"(\\d+),(\\d+),([A-Z]),(.*)(\\r|\\n)*$",
-    			{
-					"line": 1,
-					"column": 2,
-					"security": 3,
-					"message": 4
-    			}
-    		],
-    		"securities": {
-    			"W": "info",
-    			"E": "warning",
-    			"F": "info",
-    			"C": "info",
-    			"N": "hint"
-    		}
-		}
-	},
 	"python.jediEnabled": false,
 	"pyright.enable": true,
 	"python.linting.flake8Enabled": true,
