@@ -40,6 +40,10 @@ Plug 'duane9/nvim-rg'
 
 Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build', 'branch': 'main' }
 
+Plug 'tpope/vim-fugitive'
+
+Plug 'tveskag/nvim-blame-line'
+
 call plug#end()
 " =========================================================================
 " =  단축키 지정                                                          =
@@ -329,6 +333,10 @@ let g:airline#extensions#tabline#show_tabs = 1
 let g:NERDTreeWinSize=30
 
 autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
+
+autocmd BufEnter * EnableBlameLine
+
+let g:blameLineGitFormat = '%h(p: %p) - %an %ad %s'
 
 " ------------------------------------
 " vim-cutlass 설정
