@@ -41,6 +41,7 @@
     		}
 		}
 	},
+	"python.jediEnabled": false,
 	"pyright.enable": true,
 	"python.linting.flake8Enabled": true,
 	"python.linting.pydocstyleEnabled": true
