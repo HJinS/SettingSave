@@ -17,8 +17,10 @@ Plug 'preservim/tagbar'
 Plug 'preservim/nerdtree'
 
 " 컬러스킴(색상표) jellybeans, gruvbox
-Plug 'nanotech/jellybeans.vim'
+" Plug 'nanotech/jellybeans.vim'
 " Plug 'morhetz/gruvbox'
+" Plug 'shaunsingh/solarized.nvim'
+Plug 'rebelot/kanagawa.nvim'
 
 " 하단에 다양한 상태(몇 번째 줄, 인코딩, etc.)를 
 " 표시하는 상태바 추가
@@ -47,6 +49,9 @@ Plug 'tveskag/nvim-blame-line'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 
+Plug 'folke/tokyonight.nvim'
+
+Plug 'lukas-reineke/indent-blankline.nvim'
 call plug#end()
 " =========================================================================
 " =  단축키 지정                                                          =
@@ -65,11 +70,11 @@ call plug#end()
 " ------------------------------------
 nnoremap <silent><C-1> :NERDTreeToggle<CR><bar>:TagbarToggle <CR> 
 
-" <Ctrl + h, l> 를 눌러서 이전, 다음 탭으로 이동
+" <Ctrl + j, k> 를 눌러서 이전, 다음 탭으로 이동
 nnoremap <silent><C-j> :tabprevious<CR>
 nnoremap <silent><C-k> :tabnext<CR>
 
-" <Ctrl + j, k> 를 눌러서 이전, 다음 버퍼로 전환
+" <Ctrl + h, l> 를 눌러서 이전, 다음 버퍼로 전환
 nnoremap <silent><C-h> :bp<CR>
 nnoremap <silent><C-l> :bn<CR>
 
@@ -124,7 +129,7 @@ set tabstop=4
 set showtabline=2
 
 " 행 표시선 출력
-set colorcolumn=9999
+set colorcolumn=999
 
 if has('nvim')			" nvim 을 사용 중이라면
 	set inccommand=nosplit	" nvim live %s substitute (실시간 강조)
@@ -151,23 +156,55 @@ if has("syntax")
 	syntax on	
 endif
 
+
+lua <<EOF
+require("tokyonight").setup({
+  -- your configuration comes here
+  -- or leave it empty to use the default settings
+  style = "night", -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
+  light_style = "night", -- The theme is used when the background is set to light
+  transparent = true, -- Enable this to disable setting the background color
+  terminal_colors = true, -- Configure the colors used when opening a `:terminal` in [Neovim](https://github.com/neovim/neovim)
+  styles = {
+    -- Style to be applied to different syntax groups
+    -- Value is any valid attr-list value for `:help nvim_set_hl`
+    comments = { italic = true },
+    keywords = { italic = true },
+    functions = { italic = true },
+    variables = { italic = true },
+    -- Background styles. Can be "dark", "transparent" or "normal"
+    sidebars = "transparent", -- style for sidebars, see below
+    floats = "transparent", -- style for floating windows
+  },
+  sidebars = { "qf", "help" }, -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
+  day_brightness = 0.3, -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
+  hide_inactive_statusline = false, -- Enabling this option, will hide inactive statuslines and replace them with a thin border instead. Should work with the standard **StatusLine** and **LuaLine**.
+  dim_inactive = false, -- dims inactive windows
+  lualine_bold = false, -- When `true`, section headers in the lualine theme will be bold
+})
+EOF
+
+colorscheme tokyonight
+
+lua <<EOF
+require("ibl").setup()
+EOF
+
 " 컬러스킴(문법 강조 색상) - 현재 jellybeans
-colorschem jellybeans
+" colorschem jellybeans
 " colorschem gruvbox
+" colorscheme solarized
+" colorscheme kanagawa
 
 " =========================================================================
 " =  하이라이트 정의                                                      =
 " =========================================================================
 " 버퍼(창)과 버퍼의 끝(창의 끝)을 투명하게
-highlight Normal guibg=NONE
-highlight EndOfBuffer guibg=NONE
-
-" 줄번호 배경색은 투명(NULL)하게, 
-" 글자는 굵게(bold), 글자색은 하얗게(White)
-highlight LineNr guibg=NONE gui=bold guifg=white
-
-" 행 표시선 색상
-highlight ColorColumn guibg=White
+highlight Normal guibg=none
+highlight NonText guibg=none
+highlight Normal ctermbg=none
+highlight NonText ctermbg=none
+highlight EndOfBuffer guibg=NONEne
 " =========================================================================
 " =  함수 정의                                                            =
 " =========================================================================
@@ -293,13 +330,13 @@ command! -bang -nargs=* GGrep
 "  nvim-treesitter 설정
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "python", "kotlin", "java", "javascript", "html", "lua", "ini", "yaml", "htmldjango" },
+  ensure_installed = { "python", "kotlin", "java", "javascript", "html", "lua", "ini", "yaml", "htmldjango", "json", "json5" },
   ignore_install = { "" },
   auto_install = true,
   sync_install = true,
   highlight = {
     enable = true,
-    additional_vim_regex_highlighting = true,
+    additional_vim_regex_highlighting = false,
   },
 }
 EOF
@@ -337,7 +374,7 @@ let g:airline#extensions#tabline#show_tabs = 1
 " NERDTree 설정
 " ------------------------------------
 " 창 크기(가로)를 20 으로 설정
-let g:NERDTreeWinSize=30
+let g:NERDTreeWinSize = 30
 
 autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
 

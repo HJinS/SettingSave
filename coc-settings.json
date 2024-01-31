@@ -6,6 +6,12 @@
 	"diagnostic.warningSign": "⚠",
 	"python.jediEnabled": false,
 	"pyright.enable": true,
+	"python.analysis.diagnosticSeverityOverrides": {
+		"reportGeneralTypeIssues": false,
+		"reportFunctionMemberAccess": false,
+		"reportOptionalMemberAccess": false,
+		"reportOptionalCall": false
+	}
 	"python.linting.flake8Enabled": true,
 	"python.linting.pydocstyleEnabled": true
 }
