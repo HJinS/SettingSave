@@ -30,8 +30,6 @@ Plug 'vim-airline/vim-airline-themes'
 " vim cutlass 잘라내기 명령어가 yank 에 영향을 주지 않음
 Plug 'svermeulen/vim-cutlass'
 
-Plug 'ludovicchabant/vim-gutentags'
-
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
 Plug 'junegunn/fzf.vim'
@@ -52,6 +50,8 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'folke/tokyonight.nvim'
 
 Plug 'lukas-reineke/indent-blankline.nvim'
+
+Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
 call plug#end()
 " =========================================================================
 " =  단축키 지정                                                          =
@@ -195,6 +195,10 @@ EOF
 " colorschem gruvbox
 " colorscheme solarized
 " colorscheme kanagawa
+
+lua <<EOF
+require("toggleterm").setup()
+EOF
 
 " =========================================================================
 " =  하이라이트 정의                                                      =
