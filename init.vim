@@ -85,6 +85,8 @@ nnoremap <silent><S-l> :bp<bar>sp<bar>bn<bar>bd<CR>
 " <Ctrl + w> t 를 눌러서 커서를 NERDTree 로 옮기기
 nnoremap <silent><C-w>t :NERDTreeFocus<CR>
 
+nnoremap to :ToggleTerm<CR>
+
 " 우측 하단(botright)에 창 생성(new), 해당 창을 terminal 로 변경
 " 크기를 10 으로 재설정(resize) 후 창 높이를 고정(winfixheight)시킴
 " 줄번호는 삭제하고, 터미널 디렉터리 글자색을 변경
