@@ -38,8 +38,6 @@ Plug 'airblade/vim-rooter'
 
 Plug 'duane9/nvim-rg'
 
-Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build', 'branch': 'main' }
-
 Plug 'tpope/vim-fugitive'
 
 Plug 'tveskag/nvim-blame-line'
