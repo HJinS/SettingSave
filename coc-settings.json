@@ -12,5 +12,6 @@
 		"reportOptionalCall": false
 	}
 	"python.linting.flake8Enabled": true,
-	"python.linting.pydocstyleEnabled": true
+	"python.linting.pydocstyleEnabled": true,
+	"pyright.testing.provider": "pytest"
 }
