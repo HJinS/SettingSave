@@ -1,5 +1,7 @@
 [window]
   padding = {x =5, y = 5}
+  decorations = "Buttonless"
+  opacity = 0.9
 
 [font]
   offset = {y=5}
@@ -9,10 +11,4 @@
 
 [colors]
   [colors.primary]
-    foreground = '#ffffff'
-  [colors.secondary]
-    foreground = '#4682B4'
-
-[window]
-  decorations = 'Buttonless'
-  opacity = 0.9
+    foreground = "#A4A4A4"
