@@ -5,10 +5,38 @@
 
 [font]
   offset = {y=5}
-  size = 13
+  size = 14
 
   glyph_offset = {y=5}
 
 [colors]
   [colors.primary]
     foreground = "#A4A4A4"
+
+[shell]
+  program = "/opt/homebrew/bin/tmux"
+
+[keyboard]
+  bindings = [
+    { key = "D",        mods = "Command",       chars = "\u0006v" },
+    { key = "D",        mods = "Command | Shift", chars = "\u0006s" },
+    { key = "W",        mods = "Command",       chars = "\u0006x" },
+    { key = "H",        mods = "Command",       chars = "\u0006h" },
+    { key = "J",        mods = "Command",       chars = "\u0006j" },
+    { key = "K",        mods = "Command",       chars = "\u0006k" },
+    { key = "L",        mods = "Command",       chars = "\u0006l" },
+    { key = "T",        mods = "Command",       chars = "\u0006c" },
+    { key = "Key1",     mods = "Command",       chars = "\u00061" },
+    { key = "Key2",     mods = "Command",       chars = "\u00062" },
+    { key = "Key3",     mods = "Command",       chars = "\u00063" },
+    { key = "Key4",     mods = "Command",       chars = "\u00064" },
+    { key = "Key5",     mods = "Command",       chars = "\u00065" },
+    { key = "Key6",     mods = "Command",       chars = "\u00066" },
+    { key = "Key7",     mods = "Command",       chars = "\u00067" },
+    { key = "Key8",     mods = "Command",       chars = "\u00068" },
+    { key = "Key9",     mods = "Command",       chars = "\u00069" },
+    { key = "Left",     mods = "Command",       chars = "\u0006H" },
+    { key = "Down",     mods = "Command",       chars = "\u0006J" },
+    { key = "Up",       mods = "Command",       chars = "\u0006K" },
+    { key = "Right",    mods = "Command",       chars = "\u0006L" }
+  ]

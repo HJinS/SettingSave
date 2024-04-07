@@ -356,7 +356,7 @@ command! -bang -nargs=* GGrep
 "  nvim-treesitter 설정
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "python", "kotlin", "java", "javascript", "html", "lua", "ini", "yaml", "htmldjango", "json", "json5" },
+  ensure_installed = { "python", "kotlin", "java", "javascript", "html", "lua", "ini", "yaml", "htmldjango", "json", "json5", "terraform" },
   ignore_install = { "" },
   auto_install = true,
   sync_install = true,
