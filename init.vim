@@ -66,7 +66,7 @@ call plug#end()
 " ------------------------------------
 " 편집 모드 
 " ------------------------------------
-nnoremap <silent><C-1> :NERDTreeToggle<CR><bar>:TagbarToggle <CR> 
+nnoremap <silent><C-t> :NERDTreeToggle<CR><bar>:TagbarToggle <CR> 
 
 " <Ctrl + j, k> 를 눌러서 이전, 다음 탭으로 이동
 nnoremap <silent><C-j> :tabprevious<CR>
@@ -104,7 +104,9 @@ nnoremap <silent> <C-f> :RG<CR>
 " ------------------------------------
 " 터미널 모드 
 " ------------------------------------
-
+" status line 숨김
+" set laststatus=0
+" set display-=msgsep
 " 탭 정지 = 4 칸마다
 set tabstop=4
 " 쉬프트 (<< 혹은 >>) 이동거리 8 칸
@@ -163,7 +165,7 @@ require("tokyonight").setup({
   -- or leave it empty to use the default settings
   style = "night", -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
   light_style = "night", -- The theme is used when the background is set to light
-  transparent = true, -- Enable this to disable setting the background color
+  transparent = false, -- Enable this to disable setting the background color
   terminal_colors = true, -- Configure the colors used when opening a `:terminal` in [Neovim](https://github.com/neovim/neovim)
   styles = {
     -- Style to be applied to different syntax groups
@@ -173,10 +175,10 @@ require("tokyonight").setup({
     functions = { italic = true },
     variables = { italic = true },
     -- Background styles. Can be "dark", "transparent" or "normal"
-    sidebars = "transparent", -- style for sidebars, see below
-    floats = "transparent", -- style for floating windows
+    sidebars = "dark", -- style for sidebars, see below
+    floats = "dark", -- style for floating windows
   },
-  sidebars = { "qf", "help" }, -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
+  sidebars = { "qf", "vista_kind", "terminal", "packer" }, -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
   day_brightness = 0.3, -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
   hide_inactive_statusline = false, -- Enabling this option, will hide inactive statuslines and replace them with a thin border instead. Should work with the standard **StatusLine** and **LuaLine**.
   dim_inactive = false, -- dims inactive windows
@@ -362,7 +364,7 @@ require'nvim-treesitter.configs'.setup {
   sync_install = true,
   highlight = {
     enable = true,
-    additional_vim_regex_highlighting = false,
+    additional_vim_regex_highlighting = true,
   },
 }
 EOF
@@ -374,7 +376,7 @@ EOF
 " tagbar 설정
 " ------------------------------------
 " tagbar 생성 시 우측 하단에 위치하게끔 생성
-let g:tagbar_position = 'rightbelow'
+" let g:tagbar_position = 'rightbelow'
 " ------------------------------------
 " ConqueTerm 설정
 " 창 전환 시 ConqueTerm 에 Insert 상태로 활성화

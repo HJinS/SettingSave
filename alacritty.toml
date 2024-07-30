@@ -1,7 +1,20 @@
+[selection]
+  save_to_clipboard = true
+
+[cursor.style]
+  shape = "Beam"
+  blinking = "On"
+
+[cursor]
+  blink_interval = 500
+
+[scrolling]
+  history = 100000
+
 [window]
   padding = {x =5, y = 5}
   decorations = "Buttonless"
-  opacity = 0.9
+  opacity = 1.0
 
 [font.normal]
   family = "NotoSansM Nerd Font"
