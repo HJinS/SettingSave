@@ -16,6 +16,12 @@
 	"pyright.testing.provider": "pytest",
 	"java.saveActions.organizeImports": true,
 	"java.enabled": true,
+	"java.configuration.runtimes": [
+		{
+			"name": "JavaSE-18",
+			"path": "/Library/Java/JavaVirtualMachines/jdk-18.0.2.jdk/Contents/Home"
+		}
+	],
 	"languageserver": {
 		"terraform": {
 			"command": "terraform-ls",

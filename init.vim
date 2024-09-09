@@ -25,6 +25,7 @@ Plug 'rebelot/kanagawa.nvim'
 " 하단에 다양한 상태(몇 번째 줄, 인코딩, etc.)를 
 " 표시하는 상태바 추가
 Plug 'vim-airline/vim-airline'
+
 Plug 'vim-airline/vim-airline-themes'
 
 " vim cutlass 잘라내기 명령어가 yank 에 영향을 주지 않음
@@ -50,6 +51,23 @@ Plug 'folke/tokyonight.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 
 Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
+
+Plug 'MunifTanjim/prettier.nvim'
+
+Plug 'neovim/nvim-lspconfig'
+
+Plug 'jose-elias-alvarez/null-ls.nvim'
+
+Plug 'coffebar/neovim-project'
+
+Plug 'Shatur/neovim-session-manager'
+
+Plug 'nvim-telescope/telescope.nvim'
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 call plug#end()
 " =========================================================================
 " =  단축키 지정                                                          =
@@ -66,7 +84,7 @@ call plug#end()
 " ------------------------------------
 " 편집 모드 
 " ------------------------------------
-nnoremap <silent><C-t> :NERDTreeToggle<CR><bar>:TagbarToggle <CR> 
+nnoremap <silent><C-t> :NERDTreeToggle<CR><bar>:TagbarToggle .<CR> 
 
 " <Ctrl + j, k> 를 눌러서 이전, 다음 탭으로 이동
 nnoremap <silent><C-j> :tabprevious<CR>
@@ -111,6 +129,8 @@ nnoremap <silent> <C-f> :RG<CR>
 set tabstop=4
 " 쉬프트 (<< 혹은 >>) 이동거리 8 칸
 set shiftwidth=4
+
+set expandtab
 
 " 줄 번호를 표시한다.
 set number
@@ -372,12 +392,91 @@ EOF
 lua <<EOF
 require('gitsigns').setup()
 EOF
-" ------------------------------------
-" tagbar 설정
-" ------------------------------------
-" tagbar 생성 시 우측 하단에 위치하게끔 생성
-" let g:tagbar_position = 'rightbelow'
-" ------------------------------------
+
+lua <<EOF
+local null_ls = require("null-ls")
+
+local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
+local event = "BufWritePre" -- or "BufWritePost"
+local async = event == "BufWritePost"
+
+null_ls.setup({
+  on_attach = function(client, bufnr)
+    if client.supports_method("textDocument/formatting") then
+      vim.keymap.set("n", "<Leader>f", function()
+        vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
+      end, { buffer = bufnr, desc = "[lsp] format" })
+
+      -- format on save
+      vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
+      vim.api.nvim_create_autocmd(event, {
+        buffer = bufnr,
+        group = group,
+        callback = function()
+          vim.lsp.buf.format({ bufnr = bufnr, async = async })
+        end,
+        desc = "[lsp] format on save",
+      })
+    end
+
+    if client.supports_method("textDocument/rangeFormatting") then
+      vim.keymap.set("x", "<Leader>f", function()
+        vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
+      end, { buffer = bufnr, desc = "[lsp] format" })
+    end
+  end,
+})
+EOF
+
+lua <<EOF
+
+local prettier = require("prettier")
+prettier.setup({
+  bin = "prettierd",
+  filetypes = {
+    "css",
+    "graphql",
+    "html",
+    "javascript",
+    "javascriptreact",
+    "json",
+    "less",
+    "markdown",
+    "scss",
+    "typescript",
+    "typescriptreact",
+    "yaml",
+	"java",
+	"kotlin"
+  },
+  ["null-ls"] = {
+    condition = function()
+      return prettier.config_exists({
+        -- if `false`, skips checking `package.json` for `"prettier"` key
+        check_package_json = true,
+      })
+    end,
+    runtime_condition = function(params)
+      -- return false to skip running prettier
+      return true
+    end,
+    timeout = 5000,
+  }
+})
+EOF
+
+lua <<EOF
+require('neovim-project').setup {
+   projects = { -- define project roots
+     "~/PycharmProjects/danbi/sre/*",
+	 "~/PycharmProjects/danbi/*",
+	 "~/SpringStudy/*",
+  },
+ 
+}
+EOF
+
+
 " ConqueTerm 설정
 " 창 전환 시 ConqueTerm 에 Insert 상태로 활성화
 " let g:ConqueTerm_InsertOnEnter = 1
@@ -404,14 +503,79 @@ let g:airline#extensions#tabline#show_tabs = 1
 " 창 크기(가로)를 20 으로 설정
 let g:NERDTreeWinSize = 30
 
-autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
+let b:coc_root_patterns = ['.git', '.env', 'initialized']
 
 autocmd BufEnter * EnableBlameLine
 
 let g:blameLineGitFormat = '%h(p: %p) - %an %ad %s'
-
 " ------------------------------------
 " vim-cutlass 설정
+
+let g:NERDTreeFileLines = 1
+
+let g:NERDTreeGitStatusIndicatorMapCustom = {
+	\ 'Modified'  :'✹',
+	\ 'Staged'    :'✚',
+	\ 'Untracked' :'✭',
+	\ 'Renamed'   :'➜',
+	\ 'Unmerged'  :'═',
+	\ 'Deleted'   :'✖',
+	\ 'Dirty'     :'✗',
+	\ 'Ignored'   :'☒',
+	\ 'Clean'     :'✔︎',
+	\ 'Unknown'   :'?',
+\ }
+
+let g:NERDTreeDirArrowCollapsible = ''
+let g:NERDTreeDirArrowExpandable = ''
+let g:DevIconsDefaultFolderOpenSymbol = ''
+let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+
+"let g:NERDTreeDirArrowCollapsible = ''
+"let g:NERDTreeDirArrowExpandable = ''
+
+" you can add these colors to your .vimrc to help customizing
+let s:brown = "905532"
+let s:aqua =  "3AFFDB"
+let s:blue = "689FB6"
+let s:darkBlue = "44788E"
+let s:purple = "834F79"
+let s:lightPurple = "834F79"
+let s:red = "AE403F"
+let s:beige = "F5C06F"
+let s:yellow = "F09F17"
+let s:orange = "D4843E"
+let s:darkOrange = "F16529"
+let s:pink = "CB6F6F"
+let s:salmon = "EE6E73"
+let s:green = "8FAA54"
+let s:lightGreen = "31B53E"
+let s:white = "FFFFFF"
+let s:rspec_red = 'FE405F'
+let s:git_orange = 'F54D27'
+
+let g:NERDTreeExtensionHighlightColor = {} " this line is needed to avoid error
+let g:NERDTreeExactMatchHighlightColor = {} " this line is needed to avoid error
+let g:NERDTreePatternMatchHighlightColor = {} " this line is needed to avoid error
+
+let g:NERDTreeExtensionHighlightColor['c'] = s:lightGreen " sets the color of css files to blue
+let g:NERDTreeExtensionHighlightColor['h'] = s:brown " sets the color of css files to blue
+let g:NERDTreeExactMatchHighlightColor['.gitignore'] = s:git_orange " sets the color for .gitignore files
+let g:NERDTreePatternMatchHighlightColor['.*_spec\.rb$'] = s:rspec_red " sets the color for files ending with _spec.rb
+
+let g:WebDevIconsDefaultFolderSymbolColor = s:beige " sets the color for folders that did not match any rule
+let g:WebDevIconsDefaultFileSymbolColor = s:blue " sets the color for files that did not match any rule
+
+let g:NERDTreeFileExtensionHighlightFullName = 1
+let g:NERDTreeExactMatchHighlightFullName = 1
+let g:NERDTreePatternMatchHighlightFullName = 1
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+
 " ------------------------------------
 " c, C 명령어는 yank 에 영향을 주도록 변경
 nnoremap c d
@@ -419,3 +583,4 @@ xnoremap c d
 
 nnoremap cc dd
 nnoremap C Dv;
+

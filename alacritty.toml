@@ -5,6 +5,10 @@
   shape = "Beam"
   blinking = "On"
 
+[cursor.vi_mode_style]
+  shape = "Beam"
+  blinking = "On"
+
 [cursor]
   blink_interval = 500
 
