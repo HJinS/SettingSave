@@ -350,6 +350,7 @@ nmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
 " Run the Code Lens action on the current line
 nmap <leader>cl  <Plug>(coc-codelens-action)
 
+nnoremap <silent>pr :Telescope neovim-project discover<CR> 
 " Get text in files with Rg
 command! -bang -nargs=* Rg
 	\ call fzf#vim#grep(

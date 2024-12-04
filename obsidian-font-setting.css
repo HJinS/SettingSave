@@ -1,0 +1,61 @@
+/* ~/private-vault/.obsidian/snippets */
+@font-face {
+    font-family: 'MaruBuri-Bold';
+    src: url('~/Library/Fonts/MaruBuri-Bold.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MaruBuri-ExtraLight';
+    src: url('~/Library/Fonts/MaruBuri-ExtraLight.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'MaruBuri-Light';
+    src: url('~/Library/Fonts/MaruBuri-Light.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'MaruBuri-Regular';
+    src: url('~/Library/Fonts/MaruBuri-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'MaruBuri-SemiBold';
+    src: url('~/Library/Fonts/MaruBuri-SemiBold.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+.markdown-preview-section,
+.markdown-source-view.mod-cm6 .cm-sizer {
+    font-family: 'MaruBuri-Bold', sans-serif;
+}
+
+.markdown-source-view.mod-cm6 .cm-sizer {
+    font-family: 'MaruBuri-ExtraLight', sans-serif;
+}
+
+.markdown-source-view.mod-cm6 .cm-sizer {
+    font-family: 'MaruBuri-Light', sans-serif;
+}
+
+.markdown-source-view.mod-cm6 .cm-sizer {
+    font-family: 'MaruBuri-Regular', sans-serif;
+}
+
+.markdown-source-view.mod-cm6 .cm-sizer {
+    font-family: 'MaruBuri-SemiBold', sans-serif;
+}
+

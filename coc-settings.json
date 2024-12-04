@@ -20,7 +20,7 @@
 		{
 			"name": "JavaSE-18",
 			"path": "/Library/Java/JavaVirtualMachines/jdk-18.0.2.jdk/Contents/Home"
-		}
+		},
 	],
 	"languageserver": {
 		"terraform": {
